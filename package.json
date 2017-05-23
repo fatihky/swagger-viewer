@@ -1,0 +1,17 @@
+{
+  "name": "swagger-viewer",
+  "version": "0.0.0",
+  "main": "index.js",
+  "bin": "./cli.js",
+  "license": "MIT",
+  "dependencies": {
+    "debug": "^2.6.8",
+    "express": "^4.15.3",
+    "joi": "^10.5.0",
+    "minimist": "^1.2.0",
+    "opener": "^1.4.3",
+    "request": "^2.81.0",
+    "swagger-ui": "git+ssh://git@github.com/swagger-api/swagger-ui.git",
+    "validator": "^7.0.0"
+  }
+}
