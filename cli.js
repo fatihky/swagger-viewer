@@ -12,7 +12,6 @@ const SWAGGER_DIR = path.join(__dirname, 'node_modules', 'swagger-ui');
 const DIST_DIR = path.join(SWAGGER_DIR, 'dist');
 
 const argv = require('minimist')(process.argv.slice(2));
-console.dir(argv);
 
 const Application = {
   config: null,
