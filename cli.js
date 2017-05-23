@@ -34,8 +34,6 @@ const Application = {
     } catch (err) {
       this.specFile = contents;
     }
-
-    console.log('spec file loaded');
   }
 };
 
@@ -46,7 +44,6 @@ function startApp(opts) {
 
   validateCommandLineArgs();
   loadIndexFile();
-  loadSpecFile();
 
   app.get('/', (req, res, next) => {
     res.send(Application.indexFile);
@@ -55,13 +52,20 @@ function startApp(opts) {
   app.get('/spec-file', (req, res) => {
     res.set('Access-Control-Allow-Origin', '*');
 
-    if (typeof Application.specFile === 'string') {
-      res.set('Content-Type', 'text/yaml');
-      res.send(Application.specFile);
-      return;
-    }
+    loadSpecFile(function (err) {
+      if (err) {
+        console.log(err);
+        return res.send(500, 'internal server error');
+      }
 
-    res.json(Application.specFile);
+      if (typeof Application.specFile === 'string') {
+        res.set('Content-Type', 'text/yaml');
+        res.send(Application.specFile);
+        return;
+      }
+
+      res.json(Application.specFile);
+    });
   });
 
   app.use(express.static(DIST_DIR));
@@ -115,7 +119,7 @@ function loadIndexFile() {
     .replace(/http:\/\/petstore\.swagger\.io\/v2\/swagger\.json/, `http://${Application.config.host}:${Application.config.port}/spec-file`);
 }
 
-function loadSpecFile() {
+function loadSpecFile(cb) {
   const isURL = validator.isURL(Application.config.spec, {
     protocols: [
       'http',
@@ -125,16 +129,23 @@ function loadSpecFile() {
   });
 
   if (!isURL) {
-    Application.setSpecFile(fs.readFileSync(Application.config.spec).toString());
+    fs.readFile(Application.config.spec, function (err, data) {
+      if (err) {
+        return cb(err);
+      }
+      Application.setSpecFile(data.toString());
+      cb();
+    });
     return;
   }
 
   // load spec file from url
   request(Application.config.spec, function (err, res, body) {
     if (err) {
-      throw new Error(`could not get spec file from remote server: ${err.message}`);
+      return cb(err);
     }
 
     Application.setSpecFile(body);
+    cb();
   });
 }
