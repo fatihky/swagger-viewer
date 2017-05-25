@@ -12,6 +12,6 @@ Example usage:
 ```
 swagger-viewer swagger.yaml
 swagger-viewer http://example.com/swagger.yaml
-swagger-viewer --open swagger.yaml # open documentation in browser
+swagger-viewer --open -- swagger.yaml # open documentation in browser
 swagger-viewer --port 8888 swagger.yaml # set listen port
 ```
