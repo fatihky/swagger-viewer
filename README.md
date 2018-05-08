@@ -4,7 +4,7 @@ A command line tool to view your swagger spec file.
 
 To install, run `npm install -g swagger-viewer`.
 
-To use: `swagger-viewer [--open --port port --host host --] spec`
+To use: `swagger-viewer [--open] [--port <port>] [--host <host>] [--] spec`
 
 This tool accepts both swagger spec files and urls.
 
