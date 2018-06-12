@@ -4,6 +4,9 @@
   "main": "index.js",
   "bin": "./cli.js",
   "license": "MIT",
+  "repository": {
+    "url": "https://github.com/fatihky/swagger-viewer"
+  },
   "dependencies": {
     "debug": "^3.1.0",
     "express": "^4.16.3",
