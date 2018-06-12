@@ -16,5 +16,14 @@
     "request": "^2.87.0",
     "swagger-ui-dist": "^3.17.0",
     "validator": "^10.3.0"
+  },
+  "devDependencies": {
+    "generate-changelog": "^1.7.1"
+  },
+  "scripts": {
+    "changelog": "changelog -f -",
+    "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major && git push origin && git push origin --tags",
+    "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor && git push origin && git push origin --tags",
+    "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags"
   }
 }
