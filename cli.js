@@ -117,7 +117,6 @@ function loadIndexFile() {
   Application.indexFile = fs.readFileSync(path.join(DIST_DIR, 'index.html'))
     .toString()
     .replace(/https?:\/\/petstore\.swagger\.io\/v2\/swagger\.json/, `http://${Application.config.host}:${Application.config.port}/spec-file`);
-  console.log('index', Application.indexFile)
 }
 
 function loadSpecFile(cb) {
