@@ -9,7 +9,7 @@ const opener = require('opener');
 const debug = require('debug')('swagger-viewer');
 
 const SWAGGER_DIR = path.dirname(require.resolve('swagger-ui-dist'));
-const DIST_DIR = SWAGGER_DIR;
+const DIST_DIR = SWAGGER_DIR; console.log({ DIST_DIR, SWAGGER_DIR })
 
 const argv = require('minimist')(process.argv.slice(2));
 
@@ -68,7 +68,7 @@ function startApp(opts) {
     });
   });
 
-  app.use(express.static(DIST_DIR));
+  app.get('/*', express.static(DIST_DIR));
 
   app.listen(Application.config.port, Application.config.host, function (err) {
     if (err) {
@@ -116,7 +116,8 @@ function validateCommandLineArgs() {
 function loadIndexFile() {
   Application.indexFile = fs.readFileSync(path.join(DIST_DIR, 'index.html'))
     .toString()
-    .replace(/http:\/\/petstore\.swagger\.io\/v2\/swagger\.json/, `http://${Application.config.host}:${Application.config.port}/spec-file`);
+    .replace(/https?:\/\/petstore\.swagger\.io\/v2\/swagger\.json/, `http://${Application.config.host}:${Application.config.port}/spec-file`);
+  console.log('index', Application.indexFile)
 }
 
 function loadSpecFile(cb) {
