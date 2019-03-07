@@ -10,7 +10,7 @@
   "dependencies": {
     "debug": "^3.1.0",
     "express": "^4.16.3",
-    "joi": "^13.4.0",
+    "joi": "^14.3.1",
     "minimist": "^1.2.0",
     "opener": "^1.4.3",
     "request": "^2.88.0",
