@@ -9,7 +9,7 @@ const opener = require('opener');
 const debug = require('debug')('swagger-viewer');
 
 const SWAGGER_DIR = path.dirname(require.resolve('swagger-ui-dist'));
-const DIST_DIR = SWAGGER_DIR; console.log({ DIST_DIR, SWAGGER_DIR })
+const DIST_DIR = SWAGGER_DIR;
 
 const argv = require('minimist')(process.argv.slice(2));
 
