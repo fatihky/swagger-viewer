@@ -116,7 +116,7 @@ function validateCommandLineArgs() {
 function loadIndexFile() {
   Application.indexFile = fs.readFileSync(path.join(DIST_DIR, 'index.html'))
     .toString()
-    .replace(/https?:\/\/petstore\.swagger\.io\/v2\/swagger\.json/, location.protocol + `//${Application.config.host}:${Application.config.port}/spec-file`);
+    .replace(/"https?:\/\/petstore\.swagger\.io\/v2\/swagger\.json"/, `location.protocol + "//${Application.config.host}:${Application.config.port}/spec-file"`);
 }
 
 function loadSpecFile(cb) {
