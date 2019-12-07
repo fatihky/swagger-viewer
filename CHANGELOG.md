@@ -1,3 +1,13 @@
+#### 0.2.9 (2019-12-07)
+
+##### Chores
+
+*  update swagger-ui-dist ([504441d3](https://github.com/fatihky/swagger-viewer/commit/504441d3e294016ea4384331432e623c3871a75a))
+
+##### Bug Fixes
+
+*  correctly insert http protocol ([9ce18c80](https://github.com/fatihky/swagger-viewer/commit/9ce18c809d360ee1b015cfd267889596d8bd8082))
+
 #### 0.2.8 (2019-12-07)
 
 #### 0.2.4 (2019-03-07)
