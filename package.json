@@ -11,7 +11,7 @@
     "debug": "^3.1.0",
     "express": "^4.16.3",
     "joi": "^14.3.1",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.2",
     "opener": "^1.4.3",
     "request": "^2.88.0",
     "swagger-ui-dist": "^3.24.3",
