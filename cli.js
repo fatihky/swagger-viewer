@@ -120,7 +120,7 @@ function validateCommandLineArgs() {
     require_protocol: true
   });
   
-  if (!Application.isURL) Application.rootDir = path.dirname(path.join(__dirname, value.spec));
+  if (!Application.isURL) Application.rootDir = path.dirname(path.join(process.cwd(), value.spec));
   Application.config = value;
 }
 
