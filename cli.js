@@ -17,6 +17,8 @@ const Application = {
   config: null,
   indexFile: null,
   specFile: null,
+  rootDir: null,
+  isURL: false,
 
   onLoad() {
     if (argv.open) {
@@ -68,7 +70,7 @@ function startApp(opts) {
     });
   });
 
-  app.get('/*', express.static(DIST_DIR));
+  app.get('/*', express.static(DIST_DIR), express.static(Application.rootDir || DIST_DIR, { extensions: '.yaml' }));
 
   app.listen(Application.config.port, Application.config.host, function (err) {
     if (err) {
@@ -110,6 +112,15 @@ function validateCommandLineArgs() {
 
   value.spec = value._[0];
 
+  Application.isURL = validator.isURL(value.spec, {
+    protocols: [
+      'http',
+      'https'
+    ],
+    require_protocol: true
+  });
+  
+  if (!Application.isURL) Application.rootDir = path.dirname(path.join(__dirname, value.spec));
   Application.config = value;
 }
 
@@ -120,15 +131,7 @@ function loadIndexFile() {
 }
 
 function loadSpecFile(cb) {
-  const isURL = validator.isURL(Application.config.spec, {
-    protocols: [
-      'http',
-      'https'
-    ],
-    require_protocol: true
-  });
-
-  if (!isURL) {
+  if (!Application.isURL) {
     fs.readFile(Application.config.spec, function (err, data) {
       if (err) {
         return cb(err);
