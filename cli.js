@@ -69,6 +69,8 @@ function startApp(opts) {
   });
 
   app.get('/*', express.static(DIST_DIR));
+  // Increase the use of target files for multiple files
+  app.get('/*', express.static(path.dirname(path.join(__dirname, Application.config.spec))));
 
   app.listen(Application.config.port, Application.config.host, function (err) {
     if (err) {
