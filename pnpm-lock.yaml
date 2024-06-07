@@ -15,10 +15,10 @@ importers:
         specifier: ^12.1.0
         version: 12.1.0
       express:
-        specifier: ^4.18.2
+        specifier: ^4.19.2
         version: 4.19.2
       opener:
-        specifier: ^1.4.3
+        specifier: ^1.5.2
         version: 1.5.2
       swagger-ui-dist:
         specifier: ^5.17.14
@@ -43,7 +43,7 @@ importers:
         specifier: ^13.11.10
         version: 13.11.10
       generate-changelog:
-        specifier: ^1.7.1
+        specifier: ^1.8.0
         version: 1.8.0
       ts-node:
         specifier: ^10.9.2
