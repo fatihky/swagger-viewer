@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["cli.ts"],
+  "exclude": ["dist"]
+}
