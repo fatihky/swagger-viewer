@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 import { Command } from "@commander-js/extra-typings";
-import * as express from "express";
+import express from "express";
 import { readFileSync } from "fs";
 import opener from "opener";
 import { dirname, join } from "path";
@@ -13,11 +13,36 @@ const program = new Command()
   .name("swagger-viewer")
   .option("--host <hostname>", "Listen address", "localhost")
   .option("--port <port>", "Port to listen on", (val) => Number(val), 8083)
-  .option("--open --no-open", "Launch the default browser.", true)
+  .option("--no-open --open", "Launch the default browser.", true)
   .argument("<spec file path or url>")
   .parse();
 
 const opts = program.opts();
+
+const initializerScriptTag = `
+<script charset="UTF-8">
+window.onload = function() {
+  //<editor-fold desc="Changeable Configuration Block">
+
+  // the following lines will be replaced by docker/configurator, when it runs in a docker-container
+  window.ui = SwaggerUIBundle({
+    url: location.protocol + "//${opts.host}:${opts.port}/spec-file",
+    dom_id: '#swagger-ui',
+    deepLinking: true,
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIStandalonePreset
+    ],
+    plugins: [
+      SwaggerUIBundle.plugins.DownloadUrl
+    ],
+    layout: "StandaloneLayout"
+  });
+
+  //</editor-fold>
+};
+</script>
+`;
 
 const Application = {
   indexFile: null,
@@ -104,8 +129,8 @@ function loadIndexFile() {
   Application.indexFile = readFileSync(join(DIST_DIR, "index.html"))
     .toString()
     .replace(
-      /"https?:\/\/petstore\.swagger\.io\/v2\/swagger\.json"/,
-      `location.protocol + "//${opts.host}:${opts.port}/spec-file"`
+      '<script src="./swagger-initializer.js" charset="UTF-8"> </script>',
+      initializerScriptTag
     );
 }
 
