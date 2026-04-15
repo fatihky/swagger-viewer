@@ -1,9 +1,9 @@
 #! /usr/bin/env node
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { Command } from "@commander-js/extra-typings";
 import express from "express";
-import { readFileSync } from "fs";
 import opener from "opener";
-import { dirname, join } from "path";
 import { getAbsoluteFSPath } from "swagger-ui-dist";
 import validator from "validator";
 
@@ -45,9 +45,9 @@ window.onload = function() {
 `;
 
 const Application = {
-  indexFile: null,
+  indexFile: null as string | null,
   specFile: "",
-  rootDir: null,
+  rootDir: null as string | null,
   isURL: false,
 
   onLoad() {
@@ -63,7 +63,7 @@ const Application = {
   setSpecFile(contents: string) {
     try {
       this.specFile = JSON.parse(contents);
-    } catch (err) {
+    } catch {
       this.specFile = contents;
     }
   },
@@ -77,11 +77,11 @@ function startApp() {
   validateCommandLineArgs();
   loadIndexFile();
 
-  app.get("/", (req, res, next) => {
+  app.get("/", (_req, res) => {
     res.send(Application.indexFile);
   });
 
-  app.get("/spec-file", (req, res) => {
+  app.get("/spec-file", (_req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
 
     loadSpecFile()
@@ -102,12 +102,12 @@ function startApp() {
   });
 
   app.get(
-    "/*",
+    "/*path",
     express.static(DIST_DIR),
-    express.static(Application.rootDir || DIST_DIR, { extensions: [".yaml"] })
+    express.static(Application.rootDir || DIST_DIR, { extensions: [".yaml"] }),
   );
 
-  app.listen(opts.port, opts.host, function () {
+  app.listen(opts.port, opts.host, () => {
     console.log(`server is listening on ${opts.port}`);
     Application.onLoad();
   });
@@ -130,7 +130,7 @@ function loadIndexFile() {
     .toString()
     .replace(
       '<script src="./swagger-initializer.js" charset="UTF-8"> </script>',
-      initializerScriptTag
+      initializerScriptTag,
     );
 }
 
