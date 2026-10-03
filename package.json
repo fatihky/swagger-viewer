@@ -1,6 +1,6 @@
 {
   "name": "swagger-viewer",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "main": "./dist/cli.js",
   "bin": "./dist/cli.js",
   "license": "MIT",
