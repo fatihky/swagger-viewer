@@ -9,8 +9,13 @@ import validator from "validator";
 
 const DIST_DIR = getAbsoluteFSPath();
 
+const pkg = JSON.parse(
+  readFileSync(new URL("../package.json", import.meta.url), "utf-8"),
+);
+
 const program = new Command()
   .name("swagger-viewer")
+  .version(pkg.version, "-v, --version")
   .option("--host <hostname>", "Listen address", "localhost")
   .option("--port <port>", "Port to listen on", (val) => Number(val), 8083)
   .option("--no-open --open", "Launch the default browser.", true)
